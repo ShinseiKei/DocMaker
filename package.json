@@ -1,17 +1,17 @@
 {
-    "title": "Name of the extension",
-    "name": "github-<owner>-<repo>",
+    "title": "DocMaker",
+    "name": "github-kei-DocMaker",
     "description": "A sample extension.",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "license": "MIT",
-    "author": "your name (https://github.com/<your github id>)",
+    "author": "kei",
     "homepage": "<project web page url or this github repo url if no website available>",
     "engines": {
         "brackets": ">=2.0.0"
     },
-    "categories": "demo",
+    "categories": "shinsei",
     "keywords": [
-        "phcode", "extension", "demo"
+        "phcode", "extension", "doc"
     ],
     "files": [
         "main.js"
