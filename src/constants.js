@@ -22,8 +22,11 @@ define(function (require, exports, module) {
       NO_ACTIVE_EDITOR: "アクティブなエディターが見つかりません",
       TEMPLATE_LOAD_ERROR: "テンプレートファイルの読み込みに失敗しました",
       PANEL_LOAD_ERROR: "panel.htmlの読み込みに失敗しました",
-      INDEX_CREATING: "Index作成機能は開発中です",
-      PAGE_CREATING: "Page作成機能は開発中です",
+      INDEX_CREATING: "Indexファイルを作成しています",
+      PAGE_CREATING: "Pageファイルを作成しています",
+      NO_PROJECT_OPEN: "プロジェクトが開かれていません",
+      CONFIRM_INDEX_CREATION:
+        "defaultフォルダ内のファイルをプロジェクトルートにコピーします。既存のファイルは上書きされます。続行しますか？",
     },
   };
 });
