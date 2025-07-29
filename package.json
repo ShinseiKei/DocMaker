@@ -2,7 +2,7 @@
     "title": "DocMaker",
     "name": "github-kei-DocMaker",
     "description": "A sample extension.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "author": "kei",
     "homepage": "<project web page url or this github repo url if no website available>",
@@ -11,10 +11,11 @@
     },
     "categories": "shinsei",
     "keywords": [
-        "phcode", "extension", "doc"
+        "phcode",
+        "extension",
+        "doc"
     ],
     "files": [
         "main.js"
     ]
 }
-
