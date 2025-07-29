@@ -17,30 +17,38 @@ define(function (require, exports, module) {
      * @returns {string} テーブルHTML
      */
     generateHTML: function (rows, cols, includeHeader) {
-      var html =
-        '<table border="1" style="border-collapse: collapse; width: 100%;">\n';
+      var html = "<table>\n";
 
-      for (var i = 0; i < rows; i++) {
-        html += "  <tr>\n";
+      // ヘッダー行
+      if (includeHeader) {
+        html += "<thead>\n";
+        html += "<tr>\n";
+
         for (var j = 0; j < cols; j++) {
-          if (i === 0 && includeHeader) {
-            html +=
-              '    <th style="padding: 8px; background-color: #f0f0f0;">ヘッダー' +
-              (j + 1) +
-              "</th>\n";
-          } else {
-            html +=
-              '    <td style="padding: 8px;">セル' +
-              (i + 1) +
-              "-" +
-              (j + 1) +
-              "</td>\n";
-          }
+          html += "<th>ヘッダー" + (j + 1) + "</th>\n";
         }
-        html += "  </tr>\n";
+
+        html += "</tr>\n</thead>\n";
       }
 
-      html += "</table>\n";
+      // データ行
+      html += "<tbody>\n";
+
+      // ヘッダー行がある場合は、データ行数を1つ減らす
+      var dataRows = includeHeader ? rows - 1 : rows;
+
+      for (var i = 0; i < dataRows; i++) {
+        html += "<tr>\n";
+
+        for (var j = 0; j < cols; j++) {
+          html += "<td>セル" + (i + 1) + "-" + (j + 1) + "</td>\n";
+        }
+
+        html += "</tr>\n";
+      }
+
+      html += "</tbody>\n</table>\n<br>\n";
+
       return html;
     },
 
@@ -74,7 +82,7 @@ define(function (require, exports, module) {
         "  </div>",
         '  <div class="form-group">',
         "    <label>",
-        '      <input type="checkbox" id="table-header"> ヘッダー行を含む',
+        '      <input type="checkbox" id="table-header" checked> ヘッダー行を含む',
         "    </label>",
         "  </div>",
         "</div>",
@@ -100,19 +108,27 @@ define(function (require, exports, module) {
 
       dialog.done(function (buttonId) {
         if (buttonId === Dialogs.DIALOG_BTN_OK) {
-          self.handleCreateTable();
+          // ダイアログのDOMコンテキスト内で要素を取得
+          self.handleCreateTableWithDialog(dialog);
         }
       });
     },
 
     /**
-     * テーブル作成処理
+     * ダイアログの要素から値を取得してテーブルを作成
      */
-    handleCreateTable: function () {
+    handleCreateTableWithDialog: function (dialog) {
       var limits = CONSTANTS.TABLE_LIMITS;
-      var rows = parseInt($("#table-rows").val()) || limits.DEFAULT_ROWS;
-      var cols = parseInt($("#table-cols").val()) || limits.DEFAULT_COLS;
-      var includeHeader = $("#table-header").is(":checked");
+
+      // ダイアログのDOM要素を取得
+      var $dialog = dialog.getElement();
+
+      // ダイアログ内の要素を取得
+      var rows =
+        parseInt($dialog.find("#table-rows").val()) || limits.DEFAULT_ROWS;
+      var cols =
+        parseInt($dialog.find("#table-cols").val()) || limits.DEFAULT_COLS;
+      var includeHeader = $dialog.find("#table-header").is(":checked");
 
       // 入力値の検証
       rows = Math.max(limits.MIN_ROWS, Math.min(limits.MAX_ROWS, rows));
@@ -120,19 +136,6 @@ define(function (require, exports, module) {
 
       var tableHTML = this.generateHTML(rows, cols, includeHeader);
       EditorService.insertAtCursor(tableHTML);
-    },
-
-    /**
-     * 数値を有効な範囲内に制限
-     * @param {number} value - 入力値
-     * @param {number} min - 最小値
-     * @param {number} max - 最大値
-     * @param {number} defaultValue - デフォルト値
-     * @returns {number} 制限された値
-     */
-    clamp: function (value, min, max, defaultValue) {
-      var num = parseInt(value) || defaultValue;
-      return Math.max(min, Math.min(max, num));
     },
   };
 

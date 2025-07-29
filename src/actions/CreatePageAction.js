@@ -28,8 +28,6 @@ define(function (require, exports, module) {
    * @protected
    */
   CreatePageAction.prototype._performAction = function () {
-    console.log("DocMaker: Creating page...");
-
     alert("Page作成！");
   };
 
